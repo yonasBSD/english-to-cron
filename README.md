@@ -1,8 +1,8 @@
 # English to CronJob Syntax Converter
-[![Crates.io](https://img.shields.io/crates/v/english_to_cron.svg)](https://crates.io/crates/english_to_cron)
-[![Docs.rs](https://docs.rs/english_to_cron/badge.svg)](https://docs.rs/english_to_cron)
+[![Crates.io](https://img.shields.io/crates/v/english-to-cron.svg)](https://crates.io/crates/english-to-cron)
+[![Docs.rs](https://docs.rs/english-to-cron/badge.svg)](https://docs.rs/english-to-cron)
 
-This project is inspired by the library natural-cron, which converts natural language into cron expressions. `english_to_cron` brings similar functionality to the Rust ecosystem, allowing developers to easily schedule cron jobs using English text.
+This project is inspired by the library natural-cron, which converts natural language into cron expressions. `english-to-cron` brings similar functionality to the Rust ecosystem, allowing developers to easily schedule cron jobs using English text.
 
 
 ## Features
@@ -36,6 +36,7 @@ fn main() {
 ```
 
 ## Full List of Supported English Patterns
+
 | English Phrase                                                   	| CronJob Syntax             	|
 |------------------------------------------------------------------	|----------------------------	|
 | Run every 15 seconds                                             	| 0/15 * * * * ? *           	|

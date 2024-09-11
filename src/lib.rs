@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 mod str_to_cron;
 pub use str_to_cron::{Error, Result};
 
