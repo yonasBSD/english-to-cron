@@ -7,6 +7,7 @@ homepage = "https://docs.rs/english-to-cron"
 documentation = "https://docs.rs/english-to-cron"
 authors = ["Elad Kaplan <kaplan.elad@gmail.com>"]
 repository = "https://github.com/kaplanelad/english-to-cron"
+license = "Apache-2.0"
 
 
 [dependencies]
