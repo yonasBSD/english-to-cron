@@ -37,19 +37,19 @@ fn main() {
 
 ## Full List of Supported English Patterns
 
-| English Phrase                                                   	| CronJob Syntax             	|
-|------------------------------------------------------------------	|----------------------------	|
-| Run every 15 seconds                                             	| 0/15 * * * * ? *           	|
-| Run every 15 sec                                                 	| 0/15 * * * * ? *           	|
-| Every 15 seconds, only on Friday                                 	| 0/15 * * ? * FRI *         	|
-| Run every 3 hours                                                	| * 0/3 * * ? *              	|
-| Run at 10:00 am every day                                        	| 0 10 * * ? *               	|
-| Run at 6:00 pm every Monday through Friday                       	| 0 18 ? * MON-FRI *         	|
-| Run every 10 minutes Monday through Friday                       	| 0/10 * ? * MON-FRI *       	|
-| 7pm every Thursday                                               	| 0 19 ? * THU *             	|
-| midnight on Tuesdays                                             	| 0 0 ? * TUE *              	|
-| every day at 17:25                                               	| 25 17 * * ? *              	|
-| every 3rd day at 2:55 am from January to August in 2019 and 2020 	| 55 2 3 JAN-AUG ? 2019,2020 	|
+| English Phrase | CronJob Syntax |
+|------------------------------------------------------------------	|---------------------------- |
+| Run every 15 seconds | 0/15 * * * * ? * |
+| Run every 15 sec | 0/15 * * * * ? * |
+| Every 15 seconds, only on Friday | 0/15 * * ? * FRI * |
+| Run every 3 hours | * 0/3 * * ? * |
+| Run at 10:00 am every day | 0 10 * * ? * |
+| Run at 6:00 pm every Monday through Friday | 0 18 ? * MON-FRI * |
+| Run every 10 minutes Monday through Friday | 0/10 * ? * MON-FRI * |
+| 7pm every Thursday | 0 19 ? * THU * |
+| midnight on Tuesdays | 0 0 ? * TUE * |
+| every day at 17:25 | 25 17 * * ? * |
+| every 3rd day at 2:55 am from January to August in 2019 and 2020 | 55 2 3 JAN-AUG ? 2019,2020 |
 
 ## Contributing
 Contributions are welcome! Feel free to open issues or submit pull requests to help improve the library.
