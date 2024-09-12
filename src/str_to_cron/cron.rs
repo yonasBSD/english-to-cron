@@ -35,7 +35,6 @@ impl std::fmt::Display for Cron {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut cron_string = String::new();
 
-
         cron_string.push_str(&format!(
             "{} {} {} {} {} {} {}",
             self.syntax.seconds,

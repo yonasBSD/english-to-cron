@@ -35,10 +35,8 @@ pub fn process(token: &str, cron: &mut Cron) {
                 cron.syntax.seconds = element.frequency_to_string();
                 cron.stack.pop();
             }
-            
         } else {
             cron.syntax.seconds = "*".to_string();
-            
         }
 
         cron.stack.push(Stack::builder(Kind::Secund).build());
