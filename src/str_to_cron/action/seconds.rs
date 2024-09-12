@@ -29,12 +29,14 @@ pub fn process(token: &str, cron: &mut Cron) {
     if RE_SECUND.is_match(token) {
         if let Some(element) = cron.stack.last_mut() {
             if element.owner == Kind::FrequencyOnly {
-                cron.syntax.seconds = Some(format!("0/{}", element.frequency_to_string()));
+                cron.syntax.seconds = format!("0/{}", element.frequency_to_string());
                 cron.stack.pop();
             } else if element.owner == Kind::FrequencyWith {
-                cron.syntax.seconds = Some(element.frequency_to_string());
+                cron.syntax.seconds = element.frequency_to_string();
                 cron.stack.pop();
             }
+        } else {
+            cron.syntax.seconds = "*".to_string();
         }
 
         cron.stack.push(Stack::builder(Kind::Secund).build());

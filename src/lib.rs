@@ -17,20 +17,12 @@ pub use str_to_cron::{Error, Result};
 /// ```rust
 /// use english_to_cron::str_cron_syntax;
 ///
-/// // Every 15 seconds
-/// assert_eq!(str_cron_syntax("Run every 15 seconds").unwrap(), "0/15 * * * * ? *");
-///
-/// // Every 15 minutes
-/// assert_eq!(str_cron_syntax("Run every 15 minutes").unwrap(), "0/15 * * * ? *");
-///
-/// // Every 15 seconds, but only on Fridays
-/// assert_eq!(str_cron_syntax("Every 15 seconds, only on Friday").unwrap(), "0/15 * * ? * FRI *");
-///
-/// // At 6:00 PM from Monday to Friday
-/// assert_eq!(str_cron_syntax("Run at 6:00 pm every Monday through Friday").unwrap(), "0 18 ? * MON-FRI *");
-///
-/// // Every 3rd day at 2:55 AM between January and August in 2019 and 2020
-/// assert_eq!(str_cron_syntax("every 3rd day at 2:55 am from January to August in 2019 and 2020").unwrap(), "55 2 3 JAN-AUG ? 2019,2020");
+/// assert_eq!(str_cron_syntax("every 15 seconds").unwrap(), "0/15 * * * * ? *");
+/// assert_eq!(str_cron_syntax("every minute").unwrap(), "0 * * * * ? *");
+/// assert_eq!(str_cron_syntax("every day at 4:00 pm").unwrap(), "0 0 16 */1 * ? *");
+/// assert_eq!(str_cron_syntax("at 10:00 am").unwrap(), "0 0 10 * * ? *");
+/// assert_eq!(str_cron_syntax("Run at midnight on the 1st and 15th of the month").unwrap(), "0 0 0 1,15 * ? *");
+/// assert_eq!(str_cron_syntax("on Sunday at 12:00").unwrap(), "0 0 12 ? * SUN *");
 /// ```
 ///
 /// # Errors

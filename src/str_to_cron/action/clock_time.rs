@@ -140,11 +140,7 @@ pub fn process(token: &str, cron: &mut Cron) -> Result<()> {
     }
 
     cron.syntax.min = minute.to_string();
-    if cron.syntax.hour != "*" && !cron.syntax.hour.is_empty() {
-        cron.syntax.hour = format!("{},{}", cron.syntax.hour, hour);
-    } else {
-        cron.syntax.hour = hour.to_string();
-    }
+    cron.syntax.hour = hour.to_string();
 
     cron.stack.push(
         Stack::builder(Kind::ClockTime)

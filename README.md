@@ -25,13 +25,12 @@ Simply provide an English phrase describing the schedule, and the library will r
 use english_to_cron::str_cron_syntax;
 
 fn main() {
-    // Example: every 15 seconds
-    let cron_syntax = str_cron_syntax("Run every 15 seconds").unwrap();
-    assert_eq!(cron_syntax, "0/15 * * * * ? *");
-    
-    // Example: every Monday at 6:00 pm
-    let cron_syntax = str_cron_syntax("Run at 6:00 pm every Monday through Friday").unwrap();
-    assert_eq!(cron_syntax, "0 18 ? * MON-FRI *");
+    assert_eq!(str_cron_syntax("every 15 seconds").unwrap(), "0/15 * * * * ? *");
+    assert_eq!(str_cron_syntax("every minute").unwrap(), "0 * * * * ? *");
+    assert_eq!(str_cron_syntax("every day at 4:00 pm").unwrap(), "0 0 16 */1 * ? *");
+    assert_eq!(str_cron_syntax("at 10:00 am").unwrap(), "0 0 10 * * ? *");
+    assert_eq!(str_cron_syntax("Run at midnight on the 1st and 15th of the month").unwrap(), "0 0 0 1,15 * ? *");
+    assert_eq!(str_cron_syntax("on Sunday at 12:00").unwrap(), "0 0 12 ? * SUN *");
 }
 ```
 
@@ -39,17 +38,15 @@ fn main() {
 
 | English Phrase | CronJob Syntax |
 |------------------------------------------------------------------	|---------------------------- |
-| Run every 15 seconds | 0/15 * * * * ? * |
-| Run every 15 sec | 0/15 * * * * ? * |
-| Every 15 seconds, only on Friday | 0/15 * * ? * FRI * |
-| Run every 3 hours | * 0/3 * * ? * |
-| Run at 10:00 am every day | 0 10 * * ? * |
-| Run at 6:00 pm every Monday through Friday | 0 18 ? * MON-FRI * |
-| Run every 10 minutes Monday through Friday | 0/10 * ? * MON-FRI * |
-| 7pm every Thursday | 0 19 ? * THU * |
+| every 15 seconds | 0/15 * * * * ? * |
+| run every minute | 0 * * * * ? * |
+| fire every day at 4:00 pm | 0 0 16 */1 * ? * |
+| at 10:00 am | 0 0 10 * * ? * |
+| run at midnight on the 1st and 15th of the month | 0 0 0 1,15 * ? * |
+| On Sunday at 12:00 | 0 0 12 ? * SUN * |
+| 7pm every Thursday | 0 0 19 ? * THU * |
 | midnight on Tuesdays | 0 0 ? * TUE * |
-| every day at 17:25 | 25 17 * * ? * |
-| every 3rd day at 2:55 am from January to August in 2019 and 2020 | 55 2 3 JAN-AUG ? 2019,2020 |
+
 
 ## Contributing
 Contributions are welcome! Feel free to open issues or submit pull requests to help improve the library.
