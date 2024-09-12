@@ -8,7 +8,7 @@ pub struct Cron {
 
 #[derive(Debug)]
 pub struct Syntax {
-    pub seconds: Option<String>,
+    pub seconds: String,
     pub min: String,
     pub hour: String,
     pub day_of_month: String,
@@ -20,7 +20,7 @@ pub struct Syntax {
 impl Default for Syntax {
     fn default() -> Self {
         Self {
-            seconds: None,
+            seconds: "0".to_string(),
             min: "*".to_string(),
             hour: "*".to_string(),
             day_of_month: "*".to_string(),
@@ -35,12 +35,10 @@ impl std::fmt::Display for Cron {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut cron_string = String::new();
 
-        if let Some(second) = &self.syntax.seconds {
-            cron_string.push_str(&format!("{second} "));
-        }
 
         cron_string.push_str(&format!(
-            "{} {} {} {} {} {}",
+            "{} {} {} {} {} {} {}",
+            self.syntax.seconds,
             self.syntax.min,
             self.syntax.hour,
             self.syntax.day_of_month,

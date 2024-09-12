@@ -41,6 +41,7 @@ pub fn process(token: &str, cron: &mut Cron) {
                     end: None,
                 });
                 cron.syntax.hour = format!("0/{}", element.frequency_to_string());
+                cron.syntax.min = "0".to_string();
                 cron.stack.pop();
             } else if element.owner == Kind::FrequencyWith {
                 hour = Some(StartEnd {
@@ -48,6 +49,7 @@ pub fn process(token: &str, cron: &mut Cron) {
                     end: None,
                 });
                 cron.syntax.hour = element.frequency_to_string();
+                cron.syntax.min = "0".to_string();
                 cron.stack.pop();
             } else if element.owner == Kind::RangeStart {
                 element.min = Some(StartEnd {
@@ -66,11 +68,13 @@ pub fn process(token: &str, cron: &mut Cron) {
                     (element.frequency_start, element.frequency_end)
                 {
                     cron.syntax.hour = format!("{frequency_start}-{frequency_end}",);
+                    cron.syntax.min = "0".to_string();
                 }
 
                 return;
             }
         }
+        cron.syntax.min = "0".to_string();
 
         if let Some(hour) = hour {
             cron.stack

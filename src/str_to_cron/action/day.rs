@@ -41,9 +41,16 @@ pub fn try_from_token(str: &str) -> bool {
 pub fn process(token: &str, cron: &mut Cron) -> Result<()> {
     if RE_DAY.is_match(token) {
         cron.syntax.day_of_week = "?".to_string();
+        if cron.syntax.min == "*" {
+            cron.syntax.min = "0".to_string();
+        }
+        if cron.syntax.hour == "*" {
+            cron.syntax.hour = "0".to_string();
+        }
+        
         if let Some(element) = cron.stack.last() {
             if element.owner == Kind::FrequencyOnly {
-                cron.syntax.day_of_month = format!("0/{}", element.frequency_to_string());
+                cron.syntax.day_of_month = format!("*/{}", element.frequency_to_string());
                 cron.stack.pop();
             } else if element.owner == Kind::FrequencyWith {
                 cron.syntax.day_of_month = element.frequency_to_string();
@@ -51,8 +58,12 @@ pub fn process(token: &str, cron: &mut Cron) -> Result<()> {
             } else {
                 cron.syntax.day_of_month = "*".to_string();
             }
+        } else {
+            
+            cron.syntax.day_of_month = "*/1".to_string();
         }
     } else {
+        
         let matches: Vec<_> = RE_WEEKDAYS.find_iter(token).collect();
         if matches.is_empty() {
             return Err(Error::IncorrectValue {
@@ -88,7 +99,7 @@ pub fn process(token: &str, cron: &mut Cron) -> Result<()> {
                 cron.syntax.day_of_month = "?".to_string();
                 cron.stack.pop();
                 return Ok(());
-            }
+            } 
             cron.stack.pop();
         }
 

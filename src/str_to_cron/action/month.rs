@@ -18,10 +18,10 @@ lazy_static::lazy_static! {
     /// Regular expression to match the word "month" or "months".
     static ref RE_MONTH: Regex = Regex::new(r"(?i)^(month|months)$").unwrap();
     /// Regular expression to find month abbreviations in the input string.
-    static ref RE_MONTHS_ABBREVIATION: Regex = Regex::new(r"(?i)(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEPT|OCT|NOV|DEC)").unwrap();
+    static ref RE_MONTHS_ABBREVIATION: Regex = Regex::new(r"(?i)(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)").unwrap();
 }
 const MONTHS: [&str; 12] = [
-    "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC",
+    "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC",
 ];
 
 /// Checks if the provided token is a valid month representation.
@@ -43,7 +43,8 @@ pub fn process(token: &str, cron: &mut Cron) -> Result<()> {
     if RE_MONTH.is_match(token) {
         if let Some(element) = cron.stack.last() {
             if element.owner == Kind::FrequencyOnly {
-                cron.syntax.month = format!("0/{}", element.frequency_to_string());
+                // cron.syntax.month = format!("0/{}", element.frequency_to_string());
+                cron.syntax.month = element.frequency_to_string();
                 cron.stack.pop();
             } else if element.owner == Kind::FrequencyWith {
                 cron.syntax.month = element.frequency_to_string();
