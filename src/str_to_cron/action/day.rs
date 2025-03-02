@@ -22,14 +22,11 @@ static RE_MATCH: LazyLock<Regex> = LazyLock::new(|| {
 });
 
 /// Matches the tokens "day" or "days".
-static RE_DAY: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"(?i)^(day|days)$").unwrap()
-});
+static RE_DAY: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?i)^(day|days)$").unwrap());
 
 /// Matches the abbreviations for weekdays and the term "WEEKEND".
-static RE_WEEKDAYS: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"(?i)(MON|TUE|WED|THU|FRI|SAT|SUN|WEEKEND)").unwrap()
-});
+static RE_WEEKDAYS: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?i)(MON|TUE|WED|THU|FRI|SAT|SUN|WEEKEND)").unwrap());
 
 // Constant array representing the days of the week in uppercase.
 const WEEK_DAYS: [&str; 7] = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];

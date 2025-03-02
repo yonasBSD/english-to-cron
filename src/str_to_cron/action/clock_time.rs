@@ -25,19 +25,14 @@ static RE_MATCH: LazyLock<Regex> = LazyLock::new(|| {
 });
 
 /// A regex pattern to extract the hour from a time token.
-static RE_HOUR: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"^[0-9]+").unwrap()
-});
+static RE_HOUR: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[0-9]+").unwrap());
 
 /// A regex pattern to extract the minute from a time token.
-static RE_MINUTE: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r":[0-9]+").unwrap()
-});
+static RE_MINUTE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r":[0-9]+").unwrap());
 
 /// A regex pattern that matches the keywords "noon" and "midnight".
-static RE_NOON_MIDNIGHT: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"(noon|midnight)").unwrap()
-});
+static RE_NOON_MIDNIGHT: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(noon|midnight)").unwrap());
 
 /// Checks if a given string token matches the expected clock time format.
 pub fn try_from_token(str: &str) -> bool {
