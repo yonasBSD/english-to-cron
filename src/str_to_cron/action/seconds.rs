@@ -6,14 +6,15 @@
 
 use super::super::{action::Kind, cron::Cron, stack::Stack};
 use regex::Regex;
+use std::sync::LazyLock;
 
-lazy_static::lazy_static! {
-    /// Regular expression to match any form of the word "second".
-    static ref RE_MATCH: Regex = Regex::new(r"(?i)(seconds|second|sec|secs)").unwrap();
-    /// Regular expression to match exactly the words "second" or "seconds".
-    static ref RE_SECUND: Regex = Regex::new("^(seconds|second|sec|secs)$").unwrap();
+/// Regular expression to match any form of the word "second".
+static RE_MATCH: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?i)(seconds|second|sec|secs)").unwrap());
 
-}
+/// Regular expression to match exactly the words "second" or "seconds".
+static RE_SECUND: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new("^(seconds|second|sec|secs)$").unwrap());
 
 /// Checks if the provided token matches second-related keywords or formats.
 pub fn try_from_token(str: &str) -> bool {

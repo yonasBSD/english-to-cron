@@ -11,15 +11,20 @@ use super::super::{
     Error, Result,
 };
 use regex::Regex;
+use std::sync::LazyLock;
 
-lazy_static::lazy_static! {
-    /// Regular expression to match valid month input in various formats (e.g., "January", "JAN").
-    static ref RE_MATCH: Regex = Regex::new(r"(?i)^((months|month)|(((january|february|march|april|may|june|july|august|september|october|november|december|JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEPT|OCT|NOV|DEC)( ?and)?,? ?)+))$").unwrap();
-    /// Regular expression to match the word "month" or "months".
-    static ref RE_MONTH: Regex = Regex::new(r"(?i)^(month|months)$").unwrap();
-    /// Regular expression to find month abbreviations in the input string.
-    static ref RE_MONTHS_ABBREVIATION: Regex = Regex::new(r"(?i)(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)").unwrap();
-}
+/// Regular expression to match valid month input in various formats (e.g., "January", "JAN").
+static RE_MATCH: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?i)^((months|month)|(((january|february|march|april|may|june|july|august|september|october|november|december|JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEPT|OCT|NOV|DEC)( ?and)?,? ?)+))$").unwrap()
+});
+
+/// Regular expression to match the word "month" or "months".
+static RE_MONTH: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?i)^(month|months)$").unwrap());
+
+/// Regular expression to find month abbreviations in the input string.
+static RE_MONTHS_ABBREVIATION: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?i)(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)").unwrap());
+
 const MONTHS: [&str; 12] = [
     "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC",
 ];

@@ -4,10 +4,9 @@
 ///
 use super::super::{action::Kind, cron::Cron, stack::Stack};
 use regex::Regex;
+use std::sync::LazyLock;
 
-lazy_static::lazy_static! {
-    static ref RE_MATCH: Regex = Regex::new(r"^[0-9]+$").unwrap();
-}
+static RE_MATCH: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[0-9]+$").unwrap());
 
 /// Checks if the given string is a valid frequency token.
 pub fn try_from_token(str: &str) -> bool {

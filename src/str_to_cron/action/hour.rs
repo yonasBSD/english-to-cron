@@ -8,17 +8,16 @@ use super::super::{
     stack::{Stack, StartEnd},
 };
 use regex::Regex;
+use std::sync::LazyLock;
 
-lazy_static::lazy_static! {
-    /// Regex pattern for matching any form of the word "hour" (including "hrs" and "hours").
-    /// This pattern is case-insensitive and matches both singular and plural forms.
-    static ref RE_MATCH: Regex = Regex::new(r"(?i)(hour|hrs|hours)").unwrap();
-    /// Regex pattern to specifically match the exact words "hour", "hrs", or "hours".
-    /// This pattern is case-sensitive and is used to verify if a token is strictly
-    /// one of the specified hour terms.
-    static ref RE_HOUR: Regex = Regex::new("^(hour|hrs|hours)$").unwrap();
+/// Regex pattern for matching any form of the word "hour" (including "hrs" and "hours").
+/// This pattern is case-insensitive and matches both singular and plural forms.
+static RE_MATCH: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?i)(hour|hrs|hours)").unwrap());
 
-}
+/// Regex pattern to specifically match the exact words "hour", "hrs", or "hours".
+/// This pattern is case-sensitive and is used to verify if a token is strictly
+/// one of the specified hour terms.
+static RE_HOUR: LazyLock<Regex> = LazyLock::new(|| Regex::new("^(hour|hrs|hours)$").unwrap());
 
 /// Checks if the given string is a valid hour token.
 pub fn try_from_token(str: &str) -> bool {
