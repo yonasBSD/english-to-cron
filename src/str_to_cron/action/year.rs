@@ -10,17 +10,20 @@ use super::super::{
     Error, Result,
 };
 use regex::Regex;
+use std::sync::LazyLock;
 
-lazy_static::lazy_static! {
-    /// Regular expression to match keywords related to years (e.g., "years", "year") and numeric values.
-    static ref RE_MATCH: Regex = Regex::new(r"(?i)((years|year)|([0-9]{4}[0-9]*(( ?and)?,? ?))+)").unwrap();
-    /// Regular expression to match just the keywords for years.
-    static ref RE_YEARS: Regex = Regex::new(r"(?i)^(years|year)$").unwrap();
-    /// Regular expression to match numeric values.
-    static ref RE_NUMERIC: Regex = Regex::new(r"[0-9]+").unwrap();
-    /// Regular expression to validate year format (four digits).
-    static ref RE_YEAR_FORMAT: Regex = Regex::new(r"^[0-9]{4}$").unwrap();
-}
+/// Regular expression to match keywords related to years (e.g., "years", "year") and numeric values.
+static RE_MATCH: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?i)((years|year)|([0-9]{4}[0-9]*(( ?and)?,? ?))+)").unwrap());
+
+/// Regular expression to match just the keywords for years.
+static RE_YEARS: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"(?i)^(years|year)$").unwrap());
+
+/// Regular expression to match numeric values.
+static RE_NUMERIC: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[0-9]+").unwrap());
+
+/// Regular expression to validate year format (four digits).
+static RE_YEAR_FORMAT: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[0-9]{4}$").unwrap());
 
 /// Checks if the provided token matches year-related keywords or formats.
 pub fn try_from_token(str: &str) -> bool {

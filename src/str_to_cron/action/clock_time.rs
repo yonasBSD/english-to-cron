@@ -14,20 +14,30 @@ use super::super::{
 };
 
 use regex::Regex;
+use std::sync::LazyLock;
 
-lazy_static::lazy_static! {
-    /// A regex pattern that matches various clock time formats, including:
-    /// - 12-hour format with AM/PM (e.g., "5 PM", "7 AM")
-    /// - 24-hour format (e.g., "13:00")
-    /// - Special cases for "noon" and "midnight"
-    static ref RE_MATCH: Regex = Regex::new(r"(?i)^([0-9]+:)?[0-9]+ *(AM|PM)$|^([0-9]+:[0-9]+)$|(noon|midnight)").unwrap();
-    /// A regex pattern to extract the hour from a time token.
-    static ref RE_HOUR: Regex = Regex::new(r"^[0-9]+").unwrap();
-    /// A regex pattern to extract the minute from a time token.
-    static ref RE_MINUTE: Regex = Regex::new(r":[0-9]+").unwrap();
-    /// A regex pattern that matches the keywords "noon" and "midnight".
-    static ref RE_NOON_MIDNIGHT: Regex = Regex::new(r"(noon|midnight)").unwrap();
-}
+/// A regex pattern that matches various clock time formats, including:
+/// - 12-hour format with AM/PM (e.g., "5 PM", "7 AM")
+/// - 24-hour format (e.g., "13:00")
+/// - Special cases for "noon" and "midnight"
+static RE_MATCH: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?i)^([0-9]+:)?[0-9]+ *(AM|PM)$|^([0-9]+:[0-9]+)$|(noon|midnight)").unwrap()
+});
+
+/// A regex pattern to extract the hour from a time token.
+static RE_HOUR: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"^[0-9]+").unwrap()
+});
+
+/// A regex pattern to extract the minute from a time token.
+static RE_MINUTE: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r":[0-9]+").unwrap()
+});
+
+/// A regex pattern that matches the keywords "noon" and "midnight".
+static RE_NOON_MIDNIGHT: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(noon|midnight)").unwrap()
+});
 
 /// Checks if a given string token matches the expected clock time format.
 pub fn try_from_token(str: &str) -> bool {

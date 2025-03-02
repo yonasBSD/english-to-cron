@@ -33,9 +33,8 @@ impl Default for Syntax {
 
 impl std::fmt::Display for Cron {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let mut cron_string = String::new();
-
-        cron_string.push_str(&format!(
+        write!(
+            f,
             "{} {} {} {} {} {} {}",
             self.syntax.seconds,
             self.syntax.min,
@@ -44,9 +43,7 @@ impl std::fmt::Display for Cron {
             self.syntax.month,
             self.syntax.day_of_week,
             self.syntax.year,
-        ));
-
-        write!(f, "{}", cron_string.trim_end())
+        )
     }
 }
 

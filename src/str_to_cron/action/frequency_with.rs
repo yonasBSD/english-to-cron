@@ -6,14 +6,13 @@
 //! The file is a part of a larger module that converts human-readable strings into cron syntax.
 use super::super::{action::Kind, cron::Cron, stack::Stack, Error, Result};
 use regex::Regex;
+use std::sync::LazyLock;
 
-lazy_static::lazy_static! {
-    /// A regex pattern that matches frequency tokens with ordinal suffixes like "th", "nd", "rd", or "st".
-    static ref RE_MATCH: Regex = Regex::new(r"^[0-9]+(th|nd|rd|st)$").unwrap();
-    /// A regex pattern that extracts the numeric prefix of a token, assuming it starts with a number.
-    static ref RE_NUMERIC_PREFIX: Regex = Regex::new(r"^[0-9]+").unwrap();
-}
+/// A regex pattern that matches frequency tokens with ordinal suffixes like "th", "nd", "rd", or "st".
+static RE_MATCH: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[0-9]+(th|nd|rd|st)$").unwrap());
 
+/// A regex pattern that extracts the numeric prefix of a token, assuming it starts with a number.
+static RE_NUMERIC_PREFIX: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[0-9]+").unwrap());
 /// Checks if a given string token matches the pattern for ordinal-based frequency (e.g., "3rd", "5th").
 pub fn try_from_token(str: &str) -> bool {
     RE_MATCH.is_match(str)
@@ -30,10 +29,12 @@ pub fn try_from_token(str: &str) -> bool {
 /// Returns an error if the token doesn't contain a numeric prefix or if parsing the number fails.
 ///
 pub fn process(token: &str, cron: &mut Cron) -> Result<()> {
-    let maybe_numeric_prefix = RE_NUMERIC_PREFIX.find(token).ok_or(Error::Capture {
-        state: "frequency_with".to_string(),
-        token: token.to_string(),
-    })?;
+    let maybe_numeric_prefix = RE_NUMERIC_PREFIX
+        .find(token)
+        .ok_or_else(|| Error::Capture {
+            state: "frequency_with".to_string(),
+            token: token.to_string(),
+        })?;
     let frequency =
         maybe_numeric_prefix
             .as_str()

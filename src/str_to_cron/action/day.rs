@@ -13,15 +13,24 @@ use super::super::{
     Error, Result,
 };
 use regex::Regex;
+use std::sync::LazyLock;
 
-lazy_static::lazy_static! {
-    /// Matches various formats for days, including full names and abbreviations.
-    static ref RE_MATCH: Regex = Regex::new(r"(?i)^((days|day)|(((monday|tuesday|wednesday|thursday|friday|saturday|sunday|WEEKEND|MON|TUE|WED|THU|FRI|SAT|SUN)( ?and)?,? ?)+))$").unwrap();
-    /// Matches the tokens "day" or "days".
-    static ref RE_DAY: Regex = Regex::new(r"(?i)^(day|days)$").unwrap();
-    /// Matches the abbreviations for weekdays and the term "WEEKEND".
-    static ref RE_WEEKDAYS: Regex = Regex::new(r"(?i)(MON|TUE|WED|THU|FRI|SAT|SUN|WEEKEND)").unwrap();
-}
+/// Matches various formats for days, including full names and abbreviations.
+static RE_MATCH: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?i)^((days|day)|(((monday|tuesday|wednesday|thursday|friday|saturday|sunday|WEEKEND|MON|TUE|WED|THU|FRI|SAT|SUN)( ?and)?,? ?)+))$")
+        .unwrap()
+});
+
+/// Matches the tokens "day" or "days".
+static RE_DAY: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?i)^(day|days)$").unwrap()
+});
+
+/// Matches the abbreviations for weekdays and the term "WEEKEND".
+static RE_WEEKDAYS: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?i)(MON|TUE|WED|THU|FRI|SAT|SUN|WEEKEND)").unwrap()
+});
+
 // Constant array representing the days of the week in uppercase.
 const WEEK_DAYS: [&str; 7] = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 

@@ -4,11 +4,11 @@
 /// between elements in cron scheduling, such as "to", "through", "ending", and "and".
 use super::super::{action::Kind, cron::Cron, stack::StartEndString};
 use regex::Regex;
+use std::sync::LazyLock;
 
-lazy_static::lazy_static! {
-    /// Regular expression to match range-related keywords (e.g., "to", "through").
-    static ref RE_MATCH: Regex = Regex::new(r"(?i)(to|through|ending|end|and)").unwrap();
-}
+/// Regular expression to match range-related keywords (e.g., "to", "through").
+static RE_MATCH: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?i)(to|through|ending|end|and)").unwrap());
 
 /// Checks if the provided token matches range-related keywords.
 pub fn try_from_token(str: &str) -> bool {

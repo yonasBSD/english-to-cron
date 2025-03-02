@@ -8,17 +8,18 @@ use super::super::{
     stack::{Stack, StartEnd},
 };
 use regex::Regex;
+use std::sync::LazyLock;
 
-lazy_static::lazy_static! {
-    /// Regex pattern for matching any form of the word "minute" (including "mins" and "minutes").
-    /// This pattern is case-insensitive and matches both singular and plural forms.
-    static ref RE_MATCH: Regex = Regex::new(r"(?i)(minutes|minute|mins|min)").unwrap();
-    /// Regex pattern to specifically match the exact words "minute", "mins", or "minutes".
-    /// This pattern is case-sensitive and is used to verify if a token is strictly
-    /// one of the specified minute terms.
-    static ref RE_MINUTES: Regex = Regex::new(r"(?i)^(minutes|minute|mins|min)$").unwrap();
+/// Regex pattern for matching any form of the word "minute" (including "mins" and "minutes").
+/// This pattern is case-insensitive and matches both singular and plural forms.
+static RE_MATCH: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?i)(minutes|minute|mins|min)").unwrap());
 
-}
+/// Regex pattern to specifically match the exact words "minute", "mins", or "minutes".
+/// This pattern is case-sensitive and is used to verify if a token is strictly
+/// one of the specified minute terms.
+static RE_MINUTES: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?i)^(minutes|minute|mins|min)$").unwrap());
 
 /// Checks if the given string is a valid minute token.
 pub fn try_from_token(str: &str) -> bool {
