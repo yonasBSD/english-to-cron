@@ -9,6 +9,12 @@ pub struct Tokenizer {
     regex: Regex,
 }
 
+impl Default for Tokenizer {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Tokenizer {
     pub fn new() -> Self {
         Self {
@@ -16,6 +22,7 @@ impl Tokenizer {
         }
     }
 
+    #[must_use]
     pub fn run(&self, input_string: &str) -> Vec<String> {
         let matches = self
             .regex
